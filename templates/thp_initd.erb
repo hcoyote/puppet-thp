@@ -38,7 +38,7 @@ start() {
 		echo "$THP_DEFRAG" > /sys/kernel/mm/transparent_hugepage/defrag
 	fi
     fi
-    echo -n $"Disabling $prog: "
+    echo -n $"Configuring $prog: "
     rh_status
     return 0
 }
