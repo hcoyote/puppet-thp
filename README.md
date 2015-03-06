@@ -108,5 +108,5 @@ thp_defrag_status from defaults.  To do this, include the thp module somewhere
 in your manifests and then set the following options in your hiera YAML
 configuration.
 
-thp::thp_status: 'always'
-thp::thp_defrag_status: 'never'
+    thp::thp_status: 'always'
+    thp::thp_defrag_status: 'never'
