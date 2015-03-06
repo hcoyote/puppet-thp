@@ -1,0 +1,118 @@
+#!/bin/sh 
+#
+# thp manages transparent huge pages availability on a system
+#
+# chkconfig:   345 99 99
+# description: manages the start and stop of transparent huge page support
+#             
+
+### BEGIN INIT INFO
+# Provides: 
+# Required-Start: 
+# Required-Stop: 
+# Should-Start: 
+# Should-Stop: 
+# Default-Start: 
+# Default-Stop: 
+# Short-Description: 
+# Description:      
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+prog="thp"
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+lockfile=/var/lock/subsys/$prog
+
+start() {
+    if [[ -n $THP ]] ; then
+	if [ -f /sys/kernel/mm/transparent_hugepage/enabled ] ; then
+		echo "$THP" > /sys/kernel/mm/transparent_hugepage/enabled
+	fi
+    fi
+    if [[ -n $THP_DEFRAG ]] ; then
+	if [ -f /sys/kernel/mm/transparent_hugepage/defrag ] ; then
+		echo "$THP_DEFRAG" > /sys/kernel/mm/transparent_hugepage/defrag
+	fi
+    fi
+    echo -n $"Disabling $prog: "
+    rh_status
+    return 0
+}
+
+restart() {
+    stop
+    start
+}
+
+reload() {
+    restart
+}
+
+force_reload() {
+    restart
+}
+
+rh_status() {
+    # run checks to determine if the service is running or use generic status
+	if [ -f /sys/kernel/mm/transparent_hugepage/enabled ] ; then
+		grep -q '\[always\]' /sys/kernel/mm/transparent_hugepage/enabled
+		retval_thp=$?
+	fi
+	if [ -f /sys/kernel/mm/transparent_hugepage/defrag ] ; then
+		grep -q '\[always\]' /sys/kernel/mm/transparent_hugepage/defrag
+		retval_thp_defrag=$?
+	fi
+    
+    if [[ $retval_thp -eq 1 && $retval_thp_defrag -eq 1 ]] ; then
+	echo "THP disabled, THP Defrag disabled"
+	return 0
+    elif [[ $retval_thp -eq 1 ]] ; then
+	echo "THP disabled, THP Defrag enabled"
+	return 0
+    elif [[ $retval_thp_defrag -eq 1 ]] ; then
+	echo "THP enabled, THP Defrag disabled"
+	return 0
+    else 
+	echo "THP and THP Defrag enabled"
+        return 3
+    fi
+}
+
+rh_status_q() {
+    rh_status >/dev/null 2>&1
+}
+
+
+case "$1" in
+    start)
+        $1
+        ;;
+    stop)
+	exit 0
+        ;;
+    restart)
+        $1
+        ;;
+    reload)
+        rh_status_q || exit 7
+        $1
+        ;;
+    force-reload)
+        force_reload
+        ;;
+    status)
+        rh_status
+        ;;
+    condrestart|try-restart)
+        rh_status_q || exit 0
+        restart
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
+        exit 2
+esac
+exit $?

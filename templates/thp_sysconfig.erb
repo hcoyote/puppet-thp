@@ -1,0 +1,9 @@
+# Managed by Puppet.
+#
+# Set Transparent Huge Pages configuration to always, never, or optionally
+# madvise
+THP=<%= @thp_status -%>
+
+# Set Transparent Huge Pages defragmentation to always or never.
+THP_DEFRAG=<%= @thp_defrag_status -%>
+
