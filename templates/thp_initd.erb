@@ -69,16 +69,16 @@ rh_status() {
     
     if [[ $retval_thp -eq 1 && $retval_thp_defrag -eq 1 ]] ; then
 	echo "THP disabled, THP Defrag disabled"
-	return 0
+	return 3
     elif [[ $retval_thp -eq 1 ]] ; then
 	echo "THP disabled, THP Defrag enabled"
-	return 0
+	return 3
     elif [[ $retval_thp_defrag -eq 1 ]] ; then
 	echo "THP enabled, THP Defrag disabled"
-	return 0
+	return 3
     else 
 	echo "THP and THP Defrag enabled"
-        return 3
+        return 0
     fi
 }
 
@@ -92,7 +92,7 @@ case "$1" in
         $1
         ;;
     stop)
-	exit 0
+	rh_status_q || exit 7
         ;;
     restart)
         $1
