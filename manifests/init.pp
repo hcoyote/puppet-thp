@@ -44,8 +44,8 @@ class thp (
     validate_bool($service_enable_real)
 
     # make sure our thp configuration options are valid.
-    validate_re($thp_status, '^(always)|(never)$', 'thp::thp_status is invalid and does not match the regex.')
-    validate_re($thp_defrag_status, '^(always)|(never)$', 'thp::thp_status is invalid and does not match the regex.')
+    validate_re($thp_status, '^(always)|(never)|(madvise)$', 'thp::thp_status is invalid and does not match the regex.')
+    validate_re($thp_defrag_status, '^(always)|(never)|(madvise)$', 'thp::thp_status is invalid and does not match the regex.')
 
 
     case $::osfamily {
