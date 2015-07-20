@@ -90,13 +90,13 @@ Mode of sysconfig thp. Must be in four digit octal notation.
 
 thp_status
 ----------
-Kernel configuration option to enable or disable Transparent Huge Pages by setting a value in /sys/kernel/mm/transparent_hugepage/enabled.  Valid values are 'always' or 'never'
+Kernel configuration option to enable or disable Transparent Huge Pages by setting a value in /sys/kernel/mm/transparent_hugepage/enabled.  Valid values are 'always,' 'never,' or 'madvise.'
 
 - *Default*: 'always'
 
 thp_defrag_status
 ----------
-Kernel configuration option to enable or disable Transparent Huge Pages Defragmentation by setting a value in /sys/kernel/mm/transparent_hugepage/defrag.  Valid values are 'always' or 'never'
+Kernel configuration option to enable or disable Transparent Huge Pages Defragmentation by setting a value in /sys/kernel/mm/transparent_hugepage/defrag.  Valid values are 'always,' 'never,' or 'madvise.'
 
 - *Default*: 'always'
 
