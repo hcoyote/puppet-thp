@@ -24,13 +24,13 @@ class thp (
     validate_absolute_path($config_path)
     validate_string($config_owner)
     validate_string($config_group)
-    validate_re($config_mode, '^(\d){4}$', "nscd::config_mode is <${config_mode}>. Must be in four digit octal notation.")
+    validate_re($config_mode, '^(\d){4}$', "thp::config_mode is <${config_mode}>. Must be in four digit octal notation.")
 
     # make sure our service init file parameters are valid.
     validate_absolute_path($service_init_path)
     validate_string($service_init_owner)
     validate_string($service_init_group)
-    validate_re($service_init_mode, '^(\d){4}$', "nscd::service_init_mode is <${service_init_mode}>. Must be in four digit octal notation.")
+    validate_re($service_init_mode, '^(\d){4}$', "thp::service_init_mode is <${service_init_mode}>. Must be in four digit octal notation.")
 
     # make sure our service name parameters are valid.
     validate_string($service_name)
